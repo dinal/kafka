@@ -33,17 +33,19 @@ import kafka.utils.{CommandLineUtils, CoreUtils, Logging, ZKConfig}
 import org.apache.kafka.clients.consumer
 import org.apache.kafka.clients.consumer.{CommitFailedException, Consumer, ConsumerRecord, KafkaConsumer, OffsetAndMetadata}
 import org.apache.kafka.clients.producer.internals.ErrorLoggingCallback
-import org.apache.kafka.clients.producer.{KafkaProducer, ProducerConfig, ProducerRecord, RecordMetadata}
+import org.apache.kafka.clients.producer.{ProducerConfig, ProducerRecord, RecordMetadata}
 import org.apache.kafka.common.TopicPartition
 import org.apache.kafka.common.serialization.ByteArrayDeserializer
 import org.apache.kafka.common.utils.Utils
 import org.apache.kafka.common.errors.WakeupException
 import org.apache.kafka.common.record.Record
-
 import scala.collection.JavaConversions._
 import scala.collection.mutable.HashMap
 import scala.util.control.ControlThrowable
+
 import org.apache.kafka.clients.consumer.{ConsumerConfig => NewConsumerConfig}
+
+import io.iguaz.v3io.kafka.V3IOKafkaProducer
 
 /**
  * The mirror maker has the following architecture:
@@ -648,7 +650,7 @@ object MirrorMaker extends Logging with KafkaMetricsGroup {
 
     val sync = producerProps.getProperty("producer.type", "async").equals("sync")
 
-    val producer = new KafkaProducer[Array[Byte], Array[Byte]](producerProps)
+    val producer = new V3IOKafkaProducer[Array[Byte], Array[Byte]](producerProps)//new KafkaProducer[Array[Byte], Array[Byte]](producerProps)
 
     def send(record: ProducerRecord[Array[Byte], Array[Byte]]) {
       if (sync) {

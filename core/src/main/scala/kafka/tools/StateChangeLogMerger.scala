@@ -22,9 +22,12 @@ import scala.util.matching.Regex
 import collection.mutable
 import java.util.Date
 import java.text.SimpleDateFormat
-import kafka.utils.{CoreUtils, Logging, CommandLineUtils}
+
+import kafka.utils.{CommandLineUtils, CoreUtils, Logging}
 import kafka.common.Topic
 import java.io.{BufferedOutputStream, OutputStream}
+
+import scala.io.Source
 
 /**
  * A utility that merges the state change logs (possibly obtained from different brokers and over multiple days).
@@ -133,7 +136,7 @@ object StateChangeLogMerger extends Logging {
      */
     val pqueue = new mutable.PriorityQueue[LineIterator]()(dateBasedOrdering)
     val output: OutputStream = new BufferedOutputStream(System.out, 1024*1024)
-    val lineIterators = files.map(io.Source.fromFile(_).getLines)
+    val lineIterators = files.map(Source.fromFile(_).getLines)
     var lines: List[LineIterator] = List()
 
     for (itr <- lineIterators) {

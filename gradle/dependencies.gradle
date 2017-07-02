@@ -46,6 +46,7 @@ versions += [
   snappy: "1.1.2.6",
   zkclient: "0.9",
   zookeeper: "3.4.8",
+  iguazio: "0.12.5"
 ]
 
 // Add Scala version
@@ -107,5 +108,6 @@ libs += [
   slf4jlog4j: "org.slf4j:slf4j-log4j12:$versions.slf4j",
   snappy: "org.xerial.snappy:snappy-java:$versions.snappy",
   zkclient: "com.101tec:zkclient:$versions.zkclient",
-  zookeeper: "org.apache.zookeeper:zookeeper:$versions.zookeeper"
+  zookeeper: "org.apache.zookeeper:zookeeper:$versions.zookeeper",
+  iguazio: "io.iguaz.v3io:v3io-kafka:$versions.iguazio"
 ]

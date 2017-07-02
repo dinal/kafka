@@ -21,12 +21,15 @@ import joptsimple.OptionParser
 import java.util.Properties
 import java.util.Random
 import java.io._
+
+import scala.io.Source
+
 import kafka.consumer._
 import kafka.serializer._
 import kafka.utils._
 import kafka.log.FileMessageSet
 import kafka.log.Log
-import org.apache.kafka.clients.producer.{ProducerRecord, KafkaProducer, ProducerConfig}
+import org.apache.kafka.clients.producer.{KafkaProducer, ProducerConfig, ProducerRecord}
 
 /**
  * This is a torture test that runs against an existing broker. Here is how it works:
@@ -149,7 +152,7 @@ object TestLogCleaning {
     }
   }
   
-  def lineCount(file: File): Int = io.Source.fromFile(file).getLines.size
+  def lineCount(file: File): Int = Source.fromFile(file).getLines.size
   
   def validateOutput(producedDataFile: File, consumedDataFile: File) {
     val producedReader = externalSort(producedDataFile)
